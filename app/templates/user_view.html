@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <a href="{% url 'user_list' %}">Back</a>
+
+  <p>Username: {{ object.username }}</p>
+  <p>Date of birth: {{ object.date_of_birth|date }}</p>
+  <p>Number: {{ object.random_num }}</p>
+
+{% endblock %}

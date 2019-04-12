@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% load perms %}
+{% load bizz %}
+
+{% block content %}
+
+  <b>Login management:</b><br/>
+  {% if user.is_authenticated %}
+    Logged in
+    - <a href="{% url 'logout' %}">Logout</a><br/>
+  {% else %}
+    Not logged in
+    - <a href="{% url 'login' %}">Login</a><br/>
+  {% endif %}<br/>
+
+  <b>Perms tag for current user:</b><br/>
+  {% perms %}
+
+  <br/>
+  <br/>
+  <a href="{% url 'user_create' %}">Create new user</a>
+
+  <br/>
+  <br/>
+  <b>Users list:</b><br/>
+  <a href="{% url 'download_list' %}">Download list</a>
+  <table border="1">
+    <tr>
+      <th>User name</th>
+      <th>Date of birth</th>
+      <th>Num</th>
+      <th>BizzFuzz</th>
+      <th>Permissions</th>
+      <th>Actions</th>
+    </tr>
+    {% for user in object_list %}
+      <tr>
+        <td>
+          <a href="{% url 'user_view' user.id %}">{{ user.username }}</a>
+        </td>
+        <td>
+          {{ user.date_of_birth }}
+        </td>
+        <td>
+          {{ user.random_num }}
+        </td>
+        <td>
+          {% bizz user.random_num %}
+        </td>
+        <td>
+          {% perms user %}
+        </td>
+        <td>
+          <a href="{% url 'user_edit' user.id %}">Edit</a>
+          <a href="{% url 'user_delete' user.id %}">Delete</a>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+
+{% endblock %}
